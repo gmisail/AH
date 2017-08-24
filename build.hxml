@@ -1,0 +1,6 @@
+-cp src
+-debug
+-lib js-kit
+-lib haxelow
+-main Server
+-js www/server.js
