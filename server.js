@@ -423,7 +423,11 @@ var Server = function() { };
 $hxClasses["Server"] = Server;
 Server.__name__ = ["Server"];
 Server.main = function() {
-	var port = 8000;
+	var port = process.env["port"];
+	if(port == null) {
+		port = 8000;
+	}
+	console.log(port);
 	var app = new js_npm_Express();
 	var dirname = __dirname;
 	app.set("view engine","pug");
@@ -431,9 +435,6 @@ Server.main = function() {
 	app["use"](js_npm_express_BodyParser.json());
 	app["use"](new js_npm_express_Static(js_node_Path.join(dirname,"public")));
 	Server.db = new HaxeLow("db.json");
-	var posts = Server.db.idCol(Post);
-	var post = new Post("American Pageant Chapter 1","Smacklamore","Question 1: Answer 1");
-	_$HaxeLowCol_HaxeLowCol_$Impl_$.idInsert(posts,post);
 	Server.db.save();
 	app["use"]("/",new routes_Index().router);
 	app["use"]("/posts",new routes_Posts().router);
@@ -443,8 +444,8 @@ Server.main = function() {
 		var title = req.body.title;
 		var content = req.body.content;
 		if(creator != "" && title != "" && content != "") {
-			var posts1 = Server.db.idCol(Post);
-			_$HaxeLowCol_HaxeLowCol_$Impl_$.idInsert(posts1,new Post(title,creator,content));
+			var posts = Server.db.idCol(Post);
+			_$HaxeLowCol_HaxeLowCol_$Impl_$.idInsert(posts,new Post(title,creator,content));
 			Server.db.save();
 		}
 	});
