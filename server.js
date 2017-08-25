@@ -430,7 +430,6 @@ Server.main = function() {
 	app["use"](js_npm_express_BodyParser.json());
 	app["use"](new js_npm_express_Static(js_node_Path.join(dirname,"public")));
 	Server.db = new HaxeLow("db.json");
-	Server.db.save();
 	app["use"]("/",new routes_Index().router);
 	app["use"]("/posts",new routes_Posts().router);
 	app["use"]("/create",new routes_Create().router);
@@ -886,7 +885,7 @@ routes_Create.prototype = {
 var routes_Index = function() {
 	this.router = new js_npm_express_Router();
 	this.router.get("/",function(req,res) {
-		res.render("index.pug",{ title : "Index", message : "Index of AnswerHub"});
+		res.render("index.pug",{ title : "Index", message : "Home page."});
 	});
 };
 $hxClasses["routes.Index"] = routes_Index;
